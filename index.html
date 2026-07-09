@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>King's Chair — Hairdressing Salon</title>
+    <meta
+      name="description"
+      content="King's Chair — a hairdressing salon gallery showcasing cuts, colour, and styling."
+    />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "system-ui", "sans-serif"],
+              display: ["Playfair Display", "Georgia", "serif"],
+            },
+            colors: {
+              salon: {
+                dark: "#1c1917",
+                gold: "#b8956f",
+                cream: "#f5f0eb",
+                muted: "#78716c",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .reveal {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.55s ease, transform 0.55s ease;
+      }
+      .reveal.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      #nav-mobile-panel {
+        overflow: hidden;
+        max-height: 0;
+        opacity: 0;
+        transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
+      }
+      #nav-mobile-panel.is-open {
+        max-height: 280px;
+        opacity: 1;
+      }
+      #icon-hamburger,
+      #icon-close {
+        transition: opacity 0.2s ease, transform 0.2s ease;
+        position: absolute;
+      }
+      #icon-hamburger.is-hidden,
+      #icon-close.is-hidden {
+        opacity: 0;
+        transform: rotate(45deg) scale(0.7);
+        pointer-events: none;
+      }
+      .gallery-tile img {
+        transition: transform 0.4s ease;
+      }
+      .gallery-tile:hover img {
+        transform: scale(1.04);
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-salon-cream text-salon-dark antialiased">
+    <header class="fixed top-0 inset-x-0 z-40 bg-salon-cream/95 backdrop-blur-sm border-b border-stone-200/80">
+      <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+        <a href="#home" class="flex items-center shrink-0">
+          <img src="images/logo.svg" alt="King's Chair" class="h-10 w-auto" width="160" height="48" />
+        </a>
+        <ul class="hidden md:flex items-center gap-8 text-sm font-medium tracking-wide text-salon-muted">
+          <li><a href="#gallery" class="hover:text-salon-dark transition-colors">Gallery</a></li>
+          <li><a href="#about" class="hover:text-salon-dark transition-colors">About</a></li>
+          <li><a href="#contact" class="hover:text-salon-dark transition-colors">Contact</a></li>
+        </ul>
+        <button
+          id="nav-burger"
+          type="button"
+          class="md:hidden relative w-10 h-10 flex items-center justify-center"
+          aria-label="Open menu"
+          aria-expanded="false"
+          aria-controls="nav-mobile-panel"
+        >
+          <svg id="icon-hamburger" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg id="icon-close" class="w-6 h-6 is-hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </nav>
+      <div id="nav-mobile-panel" class="md:hidden border-t border-stone-200/80" aria-hidden="true">
+        <ul class="px-6 py-4 space-y-3 text-sm font-medium tracking-wide text-salon-muted">
+          <li><a href="#gallery" class="block py-2 hover:text-salon-dark transition-colors">Gallery</a></li>
+          <li><a href="#about" class="block py-2 hover:text-salon-dark transition-colors">About</a></li>
+          <li><a href="#contact" class="block py-2 hover:text-salon-dark transition-colors">Contact</a></li>
+        </ul>
+      </div>
+    </header>
+
+    <main>
+      <section id="home" class="pt-16 min-h-[85vh] flex items-center">
+        <div class="max-w-6xl mx-auto px-6 py-20 md:py-28 text-center">
+          <div class="reveal mb-8 flex justify-center">
+            <img src="images/logo.svg" alt="King's Chair" class="h-20 md:h-28 w-auto" width="320" height="120" />
+          </div>
+          <h1 class="reveal font-display text-4xl md:text-6xl font-semibold text-salon-dark tracking-tight mb-4">
+            Hair that feels like you
+          </h1>
+          <p class="reveal text-lg md:text-xl text-salon-muted max-w-xl mx-auto mb-10 leading-relaxed">
+            Cuts, colour, and styling in a relaxed salon space. Browse our work below.
+          </p>
+          <a
+            href="#gallery"
+            class="reveal inline-block px-8 py-3 bg-salon-dark text-salon-cream text-sm font-medium tracking-widest uppercase hover:bg-stone-800 transition-colors"
+          >
+            View gallery
+          </a>
+        </div>
+      </section>
+
+      <section id="gallery" class="py-20 md:py-28 bg-white">
+        <div class="max-w-6xl mx-auto px-6">
+          <div class="reveal text-center mb-14">
+            <h2 class="font-display text-3xl md:text-4xl font-semibold text-salon-dark mb-3">Gallery</h2>
+            <p class="text-salon-muted max-w-md mx-auto">A selection of recent work. Replace placeholders with your salon photos.</p>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+            <button type="button" class="gallery-tile reveal overflow-hidden rounded-sm aspect-[4/5] bg-stone-100 cursor-pointer text-left" data-gallery-src="images/gallery/placeholder-01.jpg" data-gallery-alt="Balayage colour" data-gallery-caption="Balayage colour">
+              <img src="images/gallery/placeholder-01.jpg" alt="Balayage colour" class="w-full h-full object-cover" loading="lazy" />
+            </button>
+            <button type="button" class="gallery-tile reveal overflow-hidden rounded-sm aspect-[4/5] bg-stone-100 cursor-pointer text-left" data-gallery-src="images/gallery/placeholder-02.jpg" data-gallery-alt="Precision cut" data-gallery-caption="Precision cut">
+              <img src="images/gallery/placeholder-02.jpg" alt="Precision cut" class="w-full h-full object-cover" loading="lazy" />
+            </button>
+            <button type="button" class="gallery-tile reveal overflow-hidden rounded-sm aspect-[4/5] bg-stone-100 cursor-pointer text-left" data-gallery-src="images/gallery/placeholder-03.jpg" data-gallery-alt="Blonde tones" data-gallery-caption="Blonde tones">
+              <img src="images/gallery/placeholder-03.jpg" alt="Blonde tones" class="w-full h-full object-cover" loading="lazy" />
+            </button>
+            <button type="button" class="gallery-tile reveal overflow-hidden rounded-sm aspect-[4/5] bg-stone-100 cursor-pointer text-left" data-gallery-src="images/gallery/placeholder-04.jpg" data-gallery-alt="Styling" data-gallery-caption="Styling">
+              <img src="images/gallery/placeholder-04.jpg" alt="Styling" class="w-full h-full object-cover" loading="lazy" />
+            </button>
+            <button type="button" class="gallery-tile reveal overflow-hidden rounded-sm aspect-[4/5] bg-stone-100 cursor-pointer text-left" data-gallery-src="images/gallery/placeholder-05.jpg" data-gallery-alt="Brunette gloss" data-gallery-caption="Brunette gloss">
+              <img src="images/gallery/placeholder-05.jpg" alt="Brunette gloss" class="w-full h-full object-cover" loading="lazy" />
+            </button>
+            <button type="button" class="gallery-tile reveal overflow-hidden rounded-sm aspect-[4/5] bg-stone-100 cursor-pointer text-left" data-gallery-src="images/gallery/placeholder-06.jpg" data-gallery-alt="Layered cut" data-gallery-caption="Layered cut">
+              <img src="images/gallery/placeholder-06.jpg" alt="Layered cut" class="w-full h-full object-cover" loading="lazy" />
+            </button>
+            <button type="button" class="gallery-tile reveal overflow-hidden rounded-sm aspect-[4/5] bg-stone-100 cursor-pointer text-left" data-gallery-src="images/gallery/placeholder-07.jpg" data-gallery-alt="Colour refresh" data-gallery-caption="Colour refresh">
+              <img src="images/gallery/placeholder-07.jpg" alt="Colour refresh" class="w-full h-full object-cover" loading="lazy" />
+            </button>
+            <button type="button" class="gallery-tile reveal overflow-hidden rounded-sm aspect-[4/5] bg-stone-100 cursor-pointer text-left" data-gallery-src="images/gallery/placeholder-08.jpg" data-gallery-alt="Blow dry" data-gallery-caption="Blow dry">
+              <img src="images/gallery/placeholder-08.jpg" alt="Blow dry" class="w-full h-full object-cover" loading="lazy" />
+            </button>
+            <button type="button" class="gallery-tile reveal overflow-hidden rounded-sm aspect-[4/5] bg-stone-100 cursor-pointer text-left" data-gallery-src="images/gallery/placeholder-09.jpg" data-gallery-alt="Event styling" data-gallery-caption="Event styling">
+              <img src="images/gallery/placeholder-09.jpg" alt="Event styling" class="w-full h-full object-cover" loading="lazy" />
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="py-20 md:py-28">
+        <div class="max-w-6xl mx-auto px-6">
+          <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+            <div class="reveal">
+              <h2 class="font-display text-3xl md:text-4xl font-semibold text-salon-dark mb-6">About the salon</h2>
+              <p class="text-salon-muted leading-relaxed mb-4">
+                King's Chair is a hairdressing salon focused on thoughtful cuts, beautiful colour, and styling that suits your everyday life.
+              </p>
+              <p class="text-salon-muted leading-relaxed mb-6">
+                Whether you're after a fresh shape, a colour refresh, or something special for an occasion, we take the time to listen and create a look you'll love.
+              </p>
+              <ul class="space-y-2 text-sm font-medium text-salon-dark">
+                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-salon-gold"></span> Cuts &amp; styling</li>
+                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-salon-gold"></span> Colour &amp; highlights</li>
+                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-salon-gold"></span> Treatments &amp; blow dries</li>
+              </ul>
+            </div>
+            <div class="reveal aspect-[4/3] rounded-sm bg-stone-200 overflow-hidden">
+              <img src="images/gallery/placeholder-01.jpg" alt="Salon interior placeholder" class="w-full h-full object-cover" loading="lazy" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="py-20 md:py-28 bg-salon-dark text-salon-cream">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+          <div class="reveal">
+            <h2 class="font-display text-3xl md:text-4xl font-semibold mb-4">Visit us</h2>
+            <p class="text-stone-400 max-w-md mx-auto mb-10 leading-relaxed">
+              Replace these placeholders with your salon address, phone number, and booking link.
+            </p>
+            <div class="space-y-2 text-stone-300 mb-10">
+              <p>123 Example Street, Your City</p>
+              <p><a href="tel:+61000000000" class="hover:text-white transition-colors">(00) 0000 0000</a></p>
+              <p><a href="mailto:hello@kingschair.example" class="hover:text-white transition-colors">hello@kingschair.example</a></p>
+            </div>
+            <a
+              href="#"
+              class="inline-block px-8 py-3 border border-salon-gold text-salon-gold text-sm font-medium tracking-widest uppercase hover:bg-salon-gold hover:text-salon-dark transition-colors"
+            >
+              Book now
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="border-t border-stone-200 py-10 text-center text-sm text-salon-muted">
+      <p class="mb-3">&copy; <span id="footer-year"></span> King's Chair. All rights reserved.</p>
+      <p>
+        <a href="terms.html" class="hover:text-salon-dark transition-colors">Terms</a>
+        <span class="mx-2">·</span>
+        <a href="privacy.html" class="hover:text-salon-dark transition-colors">Privacy</a>
+      </p>
+    </footer>
+
+    <div
+      id="gallery-lightbox"
+      class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Gallery image"
+      aria-hidden="true"
+    >
+      <button
+        id="lightbox-close"
+        type="button"
+        class="absolute top-4 right-4 w-10 h-10 flex items-center justify-center text-white/80 hover:text-white transition-colors"
+        aria-label="Close"
+      >
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+      <figure class="max-w-4xl max-h-[90vh] flex flex-col items-center">
+        <img id="lightbox-image" src="" alt="" class="max-w-full max-h-[80vh] object-contain" />
+        <figcaption id="lightbox-caption" class="mt-4 text-sm text-stone-400 tracking-wide"></figcaption>
+      </figure>
+    </div>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>
