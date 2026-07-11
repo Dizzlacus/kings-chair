@@ -1,22 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-  <rect width="64" height="64" rx="8" fill="#1c1917"/>
+  <rect width="64" height="64" rx="8" fill="#313131"/>
+  <circle cx="32" cy="32" r="22" stroke="#ffffff" stroke-width="1.5" opacity="0.3"/>
   <path
-    d="M18 42h28M24 42v-6c0-4 3-7 7-7h14c4 0 7 3 7 7v6M28 28h20M32 28v-4c0-2 2-4 4-4h0c2 0 4 2 4 4v4"
-    stroke="#b8956f"
-    stroke-width="2"
+    d="M22 40h20M26 40v-5c0-3 2-5 5-5h6c3 0 5 2 5 5v5M28 28h12M30 28v-3c0-2 1-3 3-3h0c2 0 3 1 3 3v3"
+    stroke="#ffffff"
+    stroke-width="1.75"
     stroke-linecap="round"
     stroke-linejoin="round"
   />
-  <path d="M30 22l2-4 2 4M34 22l2-4 2 4" stroke="#b8956f" stroke-width="1.5" stroke-linecap="round"/>
-  <text
-    x="32"
-    y="54"
-    text-anchor="middle"
-    font-family="Georgia, serif"
-    font-size="10"
-    font-weight="600"
-    fill="#f5f0eb"
-  >
-    KC
-  </text>
+  <path d="M30 22l1.5-3 1.5 3M33 22l1.5-3 1.5 3" stroke="#f46910" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="32" cy="18" r="1.5" fill="#f46910"/>
 </svg>

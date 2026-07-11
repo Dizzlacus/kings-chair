@@ -6,27 +6,28 @@ Static gallery site for King's Chair — a hairdressing salon.
 
 Requires [Docker Desktop](https://www.docker.com/products/docker-desktop/) or Docker Engine with Compose v2.
 
-### Local preview
+### Local preview (auto-sync on save)
 
-Build and serve the site at http://localhost:8080:
+Build once, then sync file changes into the container automatically. Works from `/Library/PersonalProjects` without Docker File Sharing setup:
+
+```bash
+docker compose down
+docker compose up --build --watch
+```
+
+Open http://localhost:8080 — save a file, then refresh the browser.
+
+Do **not** use `--profile live` (removed — it required a bind mount that fails on this Mac path).
+
+Requires Docker Compose v2.22+ (`docker compose version` to check).
+
+### One-off build (no watch)
 
 ```bash
 docker compose up --build
 ```
 
-The `images/` directory must be present before building (it is referenced by `index.html`).
-
-### Live edit mode
-
-Mount the project directory into nginx so HTML, JS, and image changes appear without rebuilding:
-
-```bash
-docker compose --profile dev-live up
-```
-
-### Production
-
-Build and run the image directly:
+Rebuild the image after each change.
 
 ```bash
 docker build -t kings-chair .
@@ -37,6 +38,7 @@ Terminate HTTPS at your reverse proxy or load balancer in production; the contai
 
 ## Customisation
 
-- Replace `images/logo.svg` with your salon logo
-- Swap `images/gallery/placeholder-*.jpg` with real salon photos
-- Update contact details and the Book now link in `index.html`
+- Logo: `images/logo.png` (brand colours: `#ffffff`, `#313131`, `#f46910`)
+- Hero image: `images/hero.jpg`
+- Gallery: `images/gallery/*.png`
+- Update the Book now link in `index.html` if you add a dedicated booking URL
