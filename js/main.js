@@ -12,10 +12,15 @@
   const iconClose = document.getElementById("icon-close");
   if (!burger || !mobileMenu || !iconOpen || !iconClose) return;
 
+  function isOpen() {
+    return mobileMenu.classList.contains("is-open");
+  }
+
   function openMenu() {
     mobileMenu.classList.add("is-open");
     mobileMenu.setAttribute("aria-hidden", "false");
     burger.setAttribute("aria-expanded", "true");
+    burger.setAttribute("aria-label", "Close menu");
     iconOpen.classList.add("is-hidden");
     iconClose.classList.remove("is-hidden");
   }
@@ -24,16 +29,27 @@
     mobileMenu.classList.remove("is-open");
     mobileMenu.setAttribute("aria-hidden", "true");
     burger.setAttribute("aria-expanded", "false");
+    burger.setAttribute("aria-label", "Open menu");
     iconOpen.classList.remove("is-hidden");
     iconClose.classList.add("is-hidden");
   }
 
   burger.addEventListener("click", () => {
-    mobileMenu.classList.contains("is-open") ? closeMenu() : openMenu();
+    isOpen() ? closeMenu() : openMenu();
   });
 
   mobileMenu.querySelectorAll("a").forEach((link) => {
     link.addEventListener("click", closeMenu);
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && isOpen()) closeMenu();
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!isOpen()) return;
+    if (burger.contains(e.target) || mobileMenu.contains(e.target)) return;
+    closeMenu();
   });
 })();
 
@@ -82,7 +98,19 @@
   const tiles = document.querySelectorAll("[data-gallery-src]");
   if (!lightbox || !lightboxImage || !tiles.length) return;
 
+  const FOCUSABLE =
+    'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
   let lastFocused = null;
+
+  function isOpen() {
+    return !lightbox.classList.contains("hidden");
+  }
+
+  function getFocusable() {
+    return Array.from(lightbox.querySelectorAll(FOCUSABLE)).filter(
+      (el) => !el.hasAttribute("disabled") && el.getAttribute("aria-hidden") !== "true"
+    );
+  }
 
   function openLightbox(src, alt, caption) {
     lastFocused = document.activeElement;
@@ -123,8 +151,32 @@
   });
 
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && !lightbox.classList.contains("hidden")) {
+    if (!isOpen()) return;
+
+    if (e.key === "Escape") {
       closeLightbox();
+      return;
+    }
+
+    if (e.key !== "Tab") return;
+
+    const focusable = getFocusable();
+    if (!focusable.length) {
+      e.preventDefault();
+      lightbox.focus();
+      return;
+    }
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    const active = document.activeElement;
+
+    if (e.shiftKey && (active === first || !lightbox.contains(active))) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && (active === last || !lightbox.contains(active))) {
+      e.preventDefault();
+      first.focus();
     }
   });
 })();
@@ -167,12 +219,14 @@
   const FADE_RANGE = 28;
   let startOffset = 0;
   let fullPinHeight = 0;
+  let measuring = false;
 
   function clamp(n, min, max) {
     return Math.min(max, Math.max(min, n));
   }
 
   function measurePin() {
+    measuring = true;
     const prevFade = gallery.style.getPropertyValue("--gallery-fade");
     const wasActive = gallery.classList.contains("is-mark-active");
     const wasFixed = pin.classList.contains("is-fixed");
@@ -193,6 +247,7 @@
     else gallery.style.removeProperty("--gallery-fade");
     gallery.classList.toggle("is-mark-active", wasActive);
     pin.classList.toggle("is-fixed", wasFixed);
+    measuring = false;
   }
 
   function setResting() {
@@ -212,6 +267,8 @@
   }
 
   function updateGalleryMark() {
+    if (measuring) return;
+
     const headerBottom = header.getBoundingClientRect().bottom;
     const stickTop = headerBottom + STICK_GAP;
     const galleryRect = gallery.getBoundingClientRect();

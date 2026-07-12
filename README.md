@@ -36,6 +36,17 @@ docker run -p 80:80 kings-chair
 
 Terminate HTTPS at your reverse proxy or load balancer in production; the container serves HTTP on port 80.
 
+## CSS (Tailwind)
+
+Styles are built locally (not via the Tailwind Play CDN):
+
+```bash
+npm install
+npm run build:css
+```
+
+Output: `css/styles.css`. Rebuild after changing HTML classes or `tailwind.config.js`. Use `npm run watch:css` while editing.
+
 ## Customisation
 
 - Logo: `images/logo.png` (brand colours: `#ffffff`, `#313131`, `#f46910`)

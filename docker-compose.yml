@@ -16,8 +16,17 @@ services:
           path: ./privacy.html
           target: /usr/share/nginx/html/privacy.html
         - action: sync
+          path: ./favicon.ico
+          target: /usr/share/nginx/html/favicon.ico
+        - action: sync
           path: ./favicon.svg
           target: /usr/share/nginx/html/favicon.svg
+        - action: sync
+          path: ./favicon
+          target: /usr/share/nginx/html/favicon
+        - action: sync
+          path: ./css
+          target: /usr/share/nginx/html/css
         - action: sync
           path: ./js
           target: /usr/share/nginx/html/js

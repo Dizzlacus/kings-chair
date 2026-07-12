@@ -9,14 +9,20 @@
       name="description"
       content="King's Chair — bespoke hairdressing at Hivetree, Newcastle upon Tyne. Cuts, colour and styling by Liv Griffin and Allan Kingsland."
     />
-    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="manifest" href="favicon/site.webmanifest" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Hero Cinzel (latin) — preload + inline @font-face so it isn't blocked on Google CSS -->
     <link
       rel="preload"
       as="font"
       type="font/woff2"
-      href="https://fonts.gstatic.com/s/cinzel/v26/8vIU7ww63mVu7gtR-kwKxNvkNOjw-gjgfY3lDWxcZqTFUw.woff2"
+      href="https://fonts.gstatic.com/s/cinzel/v26/8vIJ7ww63mVu7gt79mT7PkRXMw.woff2"
       crossorigin
     />
     <link
@@ -28,33 +34,24 @@
       href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ["Inter", "system-ui", "sans-serif"],
-              display: ["Cinzel", "Georgia", "serif"],
-            },
-            colors: {
-              salon: {
-                white: "#ffffff",
-                grey: "#000000",
-                orange: "#f46910",
-                muted: "rgba(255,255,255,0.65)",
-              },
-            },
-          },
-        },
-      };
-    </script>
+    <link rel="stylesheet" href="css/styles.css" />
     <style>
+      /* Critical hero face — same file Google serves for Cinzel latin (all weights) */
+      @font-face {
+        font-family: "Cinzel";
+        font-style: normal;
+        font-weight: 400 700;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/cinzel/v26/8vIJ7ww63mVu7gt79mT7PkRXMw.woff2) format("woff2");
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
       :root {
         --site-gutter: 1.5rem;
         --section-space: 5rem;
         --editorial-rail: 0px;
         --editorial-rail-gap: 0px;
+        /* Matches #site-header h-16 */
+        --header-offset: 4rem;
       }
       @media (min-width: 640px) {
         :root {
@@ -65,6 +62,8 @@
         :root {
           --site-gutter: 2.5rem;
           --section-space: 7rem;
+          /* Matches #site-header md:h-[4.5rem] */
+          --header-offset: 4.5rem;
         }
       }
       @media (min-width: 1024px) {
@@ -79,6 +78,10 @@
         width: 100%;
         padding-left: calc(var(--site-gutter) + var(--editorial-rail) + var(--editorial-rail-gap));
         padding-right: var(--site-gutter);
+      }
+      /* One offset for all anchors: section top sits just under the fixed header */
+      html {
+        scroll-padding-top: var(--header-offset);
       }
       /* Hero copy sits in its own half — keep the base gutter only */
       #home .site-container {
@@ -100,6 +103,45 @@
         max-width: none;
         object-fit: cover;
         object-position: center top;
+      }
+      /* Desktop: top fade for header legibility over the image half */
+      #home .hero-media-overlay {
+        background: linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.6) 0%,
+          rgba(0, 0, 0, 0.3) 35%,
+          transparent 70%
+        );
+      }
+      /* Mobile: full-bleed photo with top + bottom scrims for brand and copy */
+      @media (max-width: 767px) {
+        #home .hero-media-overlay {
+          background: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.55) 0%,
+            rgba(0, 0, 0, 0.2) 18%,
+            transparent 38%,
+            rgba(0, 0, 0, 0.4) 55%,
+            rgba(0, 0, 0, 0.85) 78%,
+            #000 100%
+          );
+        }
+        #home .hero-copy {
+          padding-bottom: max(1.75rem, env(safe-area-inset-bottom, 0px));
+        }
+        #home .hero-copy h1 {
+          font-size: clamp(1.4rem, 6.5vw, 1.85rem);
+          letter-spacing: 0.06em;
+        }
+        #home .hero-copy p {
+          margin-top: 0.875rem;
+          font-size: 0.8125rem;
+          line-height: 1.55;
+          max-width: 22rem;
+        }
+        #home .hero-cta-group {
+          margin-top: 1.25rem;
+        }
       }
 
       /* —— Reveal / stagger —— */
@@ -192,18 +234,22 @@
       /* —— Hero CTAs —— */
       .hero-cta {
         border: 1px solid rgba(255, 255, 255, 0.85);
+        white-space: nowrap;
       }
       .hero-cta-group {
-        display: inline-grid;
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
         gap: 0.75rem;
-        max-width: 100%;
+        width: 100%;
       }
-      @media (min-width: 640px) {
+      .hero-cta-group .hero-cta {
+        flex: 1 1 12.5rem;
+        max-width: 350px;
+        box-sizing: border-box;
+      }
+      @media (min-width: 768px) {
         .hero-cta-group {
-          grid-auto-flow: column;
-          grid-auto-columns: 1fr;
-          grid-template-columns: none;
           gap: 1rem;
         }
       }
@@ -421,8 +467,8 @@
 
       .section-rule {
         width: 4rem;
-        height: 1px;
-        background-color: rgba(244, 105, 16, 0.4);
+        height: 2px;
+        background-color: #f46910;
         margin-left: auto;
         margin-right: auto;
         margin-bottom: var(--section-space);
@@ -477,25 +523,22 @@
     </header>
 
     <main class="w-full max-w-full overflow-x-hidden flex flex-col">
-      <!-- Hero: 50/50 split on desktop -->
-      <section id="home" class="relative min-h-screen w-full max-w-full grid grid-cols-1 md:grid-cols-2 overflow-hidden">
-        <div class="hero-media relative min-h-[45vh] md:min-h-screen order-1 w-full min-w-0 overflow-hidden bg-salon-grey">
+      <!-- Hero: full-bleed overlay on mobile; 50/50 split on desktop -->
+      <section id="home" class="relative min-h-screen w-full max-w-full md:grid md:grid-cols-2 overflow-hidden">
+        <div class="hero-media absolute inset-0 md:relative md:min-h-screen md:order-1 w-full min-w-0 overflow-hidden bg-salon-grey">
           <img
             src="images/hero.jpg"
             alt="King's Chair salon styling"
             width="635"
             height="1024"
           />
-          <div
-            class="absolute inset-0 z-[1] bg-gradient-to-b from-black/60 via-black/30 to-transparent pointer-events-none"
-            aria-hidden="true"
-          ></div>
+          <div class="hero-media-overlay absolute inset-0 z-[1] pointer-events-none" aria-hidden="true"></div>
         </div>
 
-        <div class="bg-salon-grey flex flex-col min-h-[55vh] md:min-h-screen order-2 relative w-full min-w-0 overflow-hidden">
-          <div class="flex-1 flex flex-col justify-center site-container py-10 md:py-0 pt-24 md:pt-0 min-w-0">
+        <div class="relative z-[2] flex flex-col min-h-screen md:min-h-screen md:order-2 md:bg-salon-grey w-full min-w-0 overflow-hidden">
+          <div class="hero-copy flex-1 flex flex-col justify-end md:justify-center site-container pt-[calc(var(--header-offset)+1rem)] md:py-0 md:pt-0 min-w-0">
             <h1
-              class="reveal font-display text-[clamp(1.35rem,4.5vw,3.75rem)] font-semibold text-white/90 tracking-[0.04em] sm:tracking-[0.08em] md:tracking-[0.14em] leading-tight [text-wrap:balance] pb-1"
+              class="reveal font-display text-[clamp(1.35rem,4.5vw,3.75rem)] font-semibold text-white/90 tracking-[0.04em] sm:tracking-[0.08em] md:tracking-[0.14em] leading-none [text-wrap:balance] pb-1"
             >
               <span class="block">Award Winning Hair,</span>
               <span class="block"><span class="text-salon-orange">Tailored</span> to You.</span>
@@ -523,17 +566,15 @@
         </div>
       </section>
 
-      <div class="section-rule" aria-hidden="true"></div>
-
       <!-- Gallery -->
-      <section id="gallery" class="bg-salon-grey w-full max-w-full relative pb-[var(--section-space)]">
+      <section id="gallery" class="bg-salon-grey w-full max-w-full relative pt-[var(--section-space)] pb-[var(--section-space)]">
         <div class="gallery-rail" aria-hidden="true">
           <div class="gallery-wordmark-pin">
             <div class="gallery-wordmark font-display text-sm">
               <span class="gallery-wordmark-text">KING'S</span>
               <img
                 class="gallery-mark"
-                src="images/mark.svg"
+                src="images/mark/mark.svg"
                 alt=""
                 width="37"
                 height="95"
@@ -658,18 +699,16 @@
       <!-- About -->
       <section id="about" class="bg-salon-grey w-full max-w-full overflow-hidden pb-[var(--section-space)]">
         <div class="site-container w-full">
-          <div class="grid md:grid-cols-12 gap-12 md:gap-10 items-center w-full min-w-0">
-            <div class="reveal md:col-span-5">
+          <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center w-full min-w-0">
+            <div class="reveal">
               <p class="text-[0.65rem] font-medium tracking-[0.25em] uppercase text-white/50 mb-3">02 / About</p>
               <h2 class="font-display text-4xl md:text-6xl font-semibold text-white mb-6">About the salon</h2>
-              <div class="max-w-[32ch]">
-                <p class="text-white/65 leading-relaxed mb-4 text-sm md:text-base">
-                  King's Chair at Hivetree brings together bespoke, creative and technical expertise under one roof in Newcastle upon Tyne.
-                </p>
-                <p class="text-white/65 leading-relaxed mb-8 text-sm md:text-base">
-                  Whether you're after a fresh shape, a colour refresh, or something special for an occasion, our stylists take the time to listen and create a look you'll love.
-                </p>
-              </div>
+              <p class="text-white/65 leading-relaxed mb-4 text-sm md:text-base">
+                King's Chair at Hivetree brings together bespoke, creative and technical expertise under one roof in Newcastle upon Tyne.
+              </p>
+              <p class="text-white/65 leading-relaxed mb-8 text-sm md:text-base">
+                Whether you're after a fresh shape, a colour refresh, or something special for an occasion, our stylists take the time to listen and create a look you'll love.
+              </p>
               <div class="space-y-6">
                 <div>
                   <p class="text-sm font-medium text-white mb-1">Allan Kingsland</p>
@@ -699,7 +738,7 @@
                 </div>
               </div>
             </div>
-            <div class="reveal reveal-delay-1 md:col-span-7 site-bleed-right">
+            <div class="reveal reveal-delay-1 site-bleed-right">
               <div class="crop-frame aspect-[4/3] w-full bg-salon-grey overflow-hidden">
                 <span class="crop-mark crop-mark-tl" aria-hidden="true"></span>
                 <span class="crop-mark crop-mark-tr" aria-hidden="true"></span>
@@ -722,11 +761,11 @@
       <!-- Reviews -->
       <section id="reviews" class="bg-salon-grey w-full max-w-full overflow-hidden pb-[var(--section-space)]">
         <div class="site-container">
-          <div class="reveal section-heading flex items-end justify-between gap-6">
+          <div class="reveal section-heading flex flex-col gap-4 md:flex-row md:items-end md:justify-between md:gap-6">
             <div>
               <p class="text-[0.65rem] font-medium tracking-[0.25em] uppercase text-white/50 mb-3">03 / Reviews</p>
-              <h2 class="font-display text-4xl md:text-6xl font-semibold text-white leading-tight">
-                Clients about<br class="sm:hidden" /> our work
+              <h2 class="font-display text-4xl md:text-6xl font-semibold text-white leading-tight md:max-w-[600px]">
+                An Experience Worth Sharing
               </h2>
             </div>
             <div class="flex items-center gap-3 shrink-0">
@@ -840,12 +879,12 @@
                 </a>
               </p>
             </address>
-            <div class="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 mb-14">
+            <div class="hero-cta-group mx-auto">
               <a
                 href="https://www.instagram.com/allankingslandhair/"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-flex items-center gap-2 px-4 py-2 border border-white/30 text-[0.65rem] font-medium tracking-[0.15em] uppercase text-white hover:border-salon-orange hover:text-salon-orange transition-colors"
+                class="hero-cta inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 text-[0.65rem] sm:text-xs font-medium tracking-[0.15em] sm:tracking-[0.2em] uppercase text-white hover:border-salon-orange hover:text-salon-orange transition-colors"
               >
                 @allankingslandhair
                 <span aria-hidden="true">↗</span>
@@ -854,20 +893,12 @@
                 href="https://www.instagram.com/hair_bylivgriffin/"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-flex items-center gap-2 px-4 py-2 border border-white/30 text-[0.65rem] font-medium tracking-[0.15em] uppercase text-white hover:border-salon-orange hover:text-salon-orange transition-colors"
+                class="hero-cta inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 text-[0.65rem] sm:text-xs font-medium tracking-[0.15em] sm:tracking-[0.2em] uppercase text-white hover:border-salon-orange hover:text-salon-orange transition-colors"
               >
                 @hair_bylivgriffin
                 <span aria-hidden="true">↗</span>
               </a>
             </div>
-            <a
-              href="https://www.instagram.com/allankingslandhair/"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-block px-10 py-3.5 bg-salon-orange text-white text-sm font-medium tracking-widest uppercase hover:bg-[#d95a0d] transition-colors"
-            >
-              Book now
-            </a>
           </div>
         </div>
       </section>
