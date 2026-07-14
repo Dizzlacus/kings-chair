@@ -1,0 +1,51 @@
+---
+import { Image } from "astro:assets";
+import hero from "../assets/images/hero.jpg";
+---
+
+<section id="home" class="relative min-h-screen w-full max-w-full md:grid md:grid-cols-2 overflow-hidden">
+  <div class="hero-media absolute inset-0 md:relative md:min-h-screen md:order-1 w-full min-w-0 overflow-hidden bg-salon-grey">
+    <Image
+      src={hero}
+      alt="King's Chair salon styling"
+      widths={[400, 635, 900]}
+      sizes="(max-width: 767px) 100vw, 50vw"
+      loading="eager"
+      fetchpriority="high"
+    />
+    <div class="hero-media-overlay absolute inset-0 z-[1] pointer-events-none" aria-hidden="true"></div>
+  </div>
+
+  <div class="relative z-[2] flex flex-col min-h-screen md:min-h-screen md:order-2 md:bg-salon-grey w-full min-w-0 overflow-hidden">
+    <div
+      class="hero-copy flex-1 flex flex-col justify-end md:justify-center site-container pt-[calc(var(--header-offset)+1rem)] md:py-0 md:pt-0 min-w-0"
+    >
+      <h1
+        class="reveal font-display text-[clamp(1.35rem,4.5vw,3.75rem)] font-semibold text-white/90 tracking-[0.04em] sm:tracking-[0.08em] md:tracking-[0.14em] leading-none [text-wrap:balance] pb-1"
+      >
+        <span class="block">Award Winning Hair,</span>
+        <span class="block"><span class="text-salon-orange">Tailored</span> to You.</span>
+      </h1>
+      <p class="reveal reveal-delay-1 mt-6 text-sm md:text-base text-white/65 max-w-lg leading-relaxed tracking-wide">
+        Discover bespoke cutting, colour and styling from Newcastle's creative hair specialists, where technical expertise meets
+        exceptional client care.
+      </p>
+      <div class="reveal reveal-delay-2 hero-cta-group mt-6 md:mt-8 w-full min-w-0">
+        <a
+          href="#gallery"
+          class="hero-cta inline-flex items-center justify-center px-5 sm:px-6 py-3 text-[0.65rem] sm:text-xs font-medium tracking-[0.15em] sm:tracking-[0.2em] uppercase text-white transition-colors"
+        >
+          Explore gallery
+        </a>
+        <a
+          href="https://www.instagram.com/allankingslandhair/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hero-cta inline-flex items-center justify-center px-5 sm:px-6 py-3 text-[0.65rem] sm:text-xs font-medium tracking-[0.15em] sm:tracking-[0.2em] uppercase text-white transition-colors"
+        >
+          Book appointment
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

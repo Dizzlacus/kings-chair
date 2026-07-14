@@ -2,16 +2,25 @@
   "name": "kings-chair",
   "version": "1.0.0",
   "description": "Static gallery site for King's Chair — a hairdressing salon.",
+  "type": "module",
   "scripts": {
-    "build:css": "tailwindcss -i ./css/input.css -o ./css/styles.css --minify",
-    "watch:css": "tailwindcss -i ./css/input.css -o ./css/styles.css --watch"
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Dizzlacus/kings-chair.git"
   },
   "license": "ISC",
-  "devDependencies": {
-    "tailwindcss": "^3.4.17"
+  "dependencies": {
+    "@astrojs/check": "0.9.9",
+    "@tailwindcss/vite": "4.3.2",
+    "astro": "7.0.9",
+    "sharp": "0.35.3",
+    "tailwindcss": "4.3.2",
+    "typescript": "5.9.3"
   }
 }

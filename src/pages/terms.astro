@@ -1,0 +1,36 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const updated = new Date().toLocaleDateString("en-AU", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<BaseLayout
+  title="Terms of Use — King's Chair"
+  description="Terms of use for the King's Chair website."
+  bodyClass="legal-page"
+>
+  <nav class="border-b border-white/10 bg-black/95 backdrop-blur-sm">
+    <div class="site-container h-16 flex items-center">
+      <a href="/" class="text-sm font-semibold tracking-wider text-white hover:text-salon-orange transition-colors"
+        >← King's Chair</a
+      >
+    </div>
+  </nav>
+  <main class="site-container py-12 md:py-16">
+    <div class="max-w-3xl">
+      <h1 class="font-display text-3xl md:text-4xl font-semibold mb-6">Terms of Use</h1>
+      <p class="text-white/65 leading-relaxed mb-4">
+        This is a placeholder terms of use page for the King's Chair website. Replace this text with your own terms covering use of the
+        site, appointments, liability, and any other legal points relevant to your salon.
+      </p>
+      <p class="text-white/65 leading-relaxed mb-4">Last updated: {updated}</p>
+    </div>
+  </main>
+  <footer class="border-t border-white/10 py-8 text-center text-sm text-white/60">
+    <a href="/" class="hover:text-salon-orange transition-colors">Back to home</a>
+  </footer>
+</BaseLayout>

@@ -1,0 +1,27 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import Gallery from "../components/Gallery.astro";
+import About from "../components/About.astro";
+import Reviews from "../components/Reviews.astro";
+import Contact from "../components/Contact.astro";
+import Footer from "../components/Footer.astro";
+import Lightbox from "../components/Lightbox.astro";
+---
+
+<BaseLayout>
+  <Header />
+  <main class="w-full max-w-full overflow-x-hidden flex flex-col">
+    <Hero />
+    <Gallery />
+    <div class="section-rule" aria-hidden="true"></div>
+    <About />
+    <div class="section-rule" aria-hidden="true"></div>
+    <Reviews />
+    <div class="section-rule" aria-hidden="true"></div>
+    <Contact />
+    <Footer />
+  </main>
+  <Lightbox />
+</BaseLayout>

@@ -1,0 +1,59 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  bodyClass?: string;
+}
+
+const {
+  title = "King's Chair — Hairdressing Salon",
+  description = "King's Chair — bespoke hairdressing at Hivetree, Newcastle upon Tyne. Cuts, colour and styling by Liv Griffin and Allan Kingsland.",
+  bodyClass = "",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#000000" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="manifest" href="/favicon/site.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="https://fonts.gstatic.com/s/cinzel/v26/8vIJ7ww63mVu7gt79mT7PkRXMw.woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body
+    class:list={[
+      "min-h-screen w-full max-w-full bg-salon-grey text-white antialiased overflow-x-hidden",
+      bodyClass,
+    ]}
+  >
+    <slot />
+    <script src="../scripts/main.js"></script>
+  </body>
+</html>

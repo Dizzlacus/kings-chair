@@ -6,6 +6,10 @@ node_modules/
 .env.*
 !.env.example
 
+# Astro
+dist/
+.astro/
+
 # Logs
 logs/
 *.log
@@ -26,5 +30,5 @@ Desktop.ini
 *.swo
 *~
 
-# Tooling caches / source maps (css/styles.css is committed for Docker)
+# Tooling caches / source maps
 *.css.map

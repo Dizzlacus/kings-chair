@@ -1,0 +1,91 @@
+---
+import { Image, getImage } from "astro:assets";
+import mark from "../assets/images/mark/mark.svg";
+import { galleryItems } from "../data/gallery";
+
+const items = await Promise.all(
+  galleryItems.map(async (item) => {
+    const optimized = await getImage({ src: item.image, width: 960 });
+    return { ...item, lightboxSrc: optimized.src };
+  }),
+);
+
+const totalLabel = String(items.length).padStart(2, "0");
+---
+
+<section id="gallery" class="bg-salon-grey w-full max-w-full relative pt-[var(--section-space)] pb-[var(--section-space)]">
+  <div class="gallery-rail" aria-hidden="true">
+    <div class="gallery-wordmark-pin">
+      <div class="gallery-wordmark font-display text-sm">
+        <span class="gallery-wordmark-text">KING'S</span>
+        <img class="gallery-mark" src={mark.src} alt="" width="37" height="95" decoding="async" />
+        <span class="gallery-wordmark-text">CHAIR</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="site-container relative">
+    <div class="reveal section-heading flex flex-col md:flex-row md:items-end md:justify-between gap-4 md:gap-10">
+      <div>
+        <p class="text-[0.65rem] font-medium tracking-[0.25em] uppercase text-white/50 mb-3">01 / Gallery</p>
+        <h2 class="font-display text-4xl md:text-6xl font-semibold text-white shrink-0">Gallery</h2>
+      </div>
+      <p class="text-white/65 text-sm md:text-base md:text-right md:max-w-md leading-relaxed">
+        Recent work from the King's Chair team at Hivetree, Newcastle.
+      </p>
+    </div>
+
+    <div class="relative site-bleed-right reveal overflow-x-clip">
+      <div id="gallery-track" class="flex gap-4 md:gap-5 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2">
+        {
+          items.map((item) => (
+            <button
+              type="button"
+              class="gallery-tile shrink-0 w-[78vw] sm:w-[48vw] md:w-[38vw] lg:w-[32vw] max-w-[480px] overflow-hidden rounded-none aspect-[4/5] bg-salon-grey cursor-pointer text-left"
+              data-gallery-src={item.lightboxSrc}
+              data-gallery-alt={item.alt}
+              data-gallery-caption={item.caption}
+            >
+              <Image
+                src={item.image}
+                alt={item.alt}
+                class="w-full h-full object-cover object-top"
+                widths={[320, 480, 640]}
+                sizes="(max-width: 640px) 78vw, (max-width: 768px) 48vw, 32vw"
+                loading="lazy"
+              />
+              <span class="gallery-caption">{item.caption}</span>
+            </button>
+          ))
+        }
+        <div class="site-scroll-end" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-4 mt-8">
+      <button
+        id="gallery-prev"
+        type="button"
+        class="w-10 h-10 flex items-center justify-center text-white/80 hover:text-salon-orange transition-colors"
+        aria-label="Previous gallery image"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"></path>
+        </svg>
+      </button>
+      <button
+        id="gallery-next"
+        type="button"
+        class="w-10 h-10 flex items-center justify-center text-white/80 hover:text-salon-orange transition-colors"
+        aria-label="Next gallery image"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </button>
+      <p id="gallery-index" class="ml-2 text-[0.65rem] font-medium tracking-[0.25em] uppercase text-white/50" aria-live="polite">
+        01 — {totalLabel}
+      </p>
+    </div>
+  </div>
+</section>
