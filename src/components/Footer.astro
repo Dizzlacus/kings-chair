@@ -1,19 +1,23 @@
+---
+import { allanInstagram, livInstagram } from "../data/business";
+---
+
 <footer class="border-t border-white/10 pb-10 pt-10 text-center text-sm text-white/60 bg-salon-grey w-full max-w-full overflow-hidden">
   <div class="site-container">
     <p class="mb-3">&copy; <span id="footer-year"></span> King's Chair. All rights reserved.</p>
     <p class="mb-3">
       <a
-        href="https://www.instagram.com/allankingslandhair/"
+        href={allanInstagram.url}
         target="_blank"
         rel="noopener noreferrer"
-        class="hover:text-salon-orange transition-colors">@allankingslandhair</a
+        class="hover:text-salon-orange transition-colors">{allanInstagram.handle}</a
       >
       <span class="mx-2">·</span>
       <a
-        href="https://www.instagram.com/hair_bylivgriffin/"
+        href={livInstagram.url}
         target="_blank"
         rel="noopener noreferrer"
-        class="hover:text-salon-orange transition-colors">@hair_bylivgriffin</a
+        class="hover:text-salon-orange transition-colors">{livInstagram.handle}</a
       >
     </p>
     <p>

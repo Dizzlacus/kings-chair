@@ -58,6 +58,8 @@
   const progress = document.getElementById("scroll-progress");
   if (!header) return;
 
+  let ticking = false;
+
   function updateChrome() {
     header.classList.toggle("is-sticky", window.scrollY > 10);
 
@@ -67,14 +69,29 @@
       const pct = max > 0 ? (window.scrollY / max) * 100 : 0;
       progress.style.width = pct + "%";
     }
+    ticking = false;
+  }
+
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(updateChrome);
   }
 
   updateChrome();
-  window.addEventListener("scroll", updateChrome, { passive: true });
+  window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", updateChrome);
 })();
 
 (function () {
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const reveals = document.querySelectorAll(".reveal");
+
+  if (reduceMotion) {
+    reveals.forEach((el) => el.classList.add("is-visible"));
+    return;
+  }
+
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -87,7 +104,7 @@
     { threshold: 0.1 }
   );
 
-  document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+  reveals.forEach((el) => observer.observe(el));
 })();
 
 (function () {
@@ -182,6 +199,9 @@
 })();
 
 (function () {
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const scrollBehavior = reduceMotion ? "auto" : "smooth";
+
   function initCarousel(trackId, prevId, nextId, itemSelector) {
     const track = document.getElementById(trackId);
     const prevBtn = document.getElementById(prevId);
@@ -192,7 +212,7 @@
       const item = track.querySelector(itemSelector);
       if (!item) return;
       const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap) || 16;
-      track.scrollBy({ left: direction * (item.offsetWidth + gap), behavior: "smooth" });
+      track.scrollBy({ left: direction * (item.offsetWidth + gap), behavior: scrollBehavior });
     }
 
     if (prevBtn) prevBtn.addEventListener("click", () => scrollBySlide(-1));
@@ -293,6 +313,15 @@
 
     gallery.style.setProperty("--gallery-fade", fade.toFixed(3));
     gallery.classList.toggle("is-mark-active", fade > 0.85);
+    markTicking = false;
+  }
+
+  let markTicking = false;
+
+  function onMarkScroll() {
+    if (markTicking) return;
+    markTicking = true;
+    requestAnimationFrame(updateGalleryMark);
   }
 
   function refresh() {
@@ -301,7 +330,7 @@
   }
 
   refresh();
-  window.addEventListener("scroll", updateGalleryMark, { passive: true });
+  window.addEventListener("scroll", onMarkScroll, { passive: true });
   window.addEventListener("resize", refresh);
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(refresh);
@@ -340,24 +369,4 @@
   track.addEventListener("scroll", updateIndex, { passive: true });
   window.addEventListener("resize", updateIndex);
   updateIndex();
-
-  // One-time horizontal nudge to hint lookbook browsing
-  let nudged = false;
-  const nudgeObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting || nudged) return;
-        nudged = true;
-        nudgeObserver.disconnect();
-        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        if (reduceMotion) return;
-        track.scrollBy({ left: 12, behavior: "smooth" });
-        window.setTimeout(() => {
-          track.scrollBy({ left: -12, behavior: "smooth" });
-        }, 450);
-      });
-    },
-    { threshold: 0.35 }
-  );
-  nudgeObserver.observe(track);
 })();

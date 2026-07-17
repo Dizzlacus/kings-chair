@@ -1,5 +1,6 @@
 # Dependencies
 node_modules/
+.pnpm-store/
 
 # Environment / secrets
 .env
@@ -26,6 +27,7 @@ Desktop.ini
 # Editors / IDEs
 .idea/
 .vscode/
+.cursor/
 *.swp
 *.swo
 *~

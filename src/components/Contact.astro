@@ -1,3 +1,7 @@
+---
+import { business, allanInstagram, livInstagram } from "../data/business";
+---
+
 <section id="contact" class="bg-salon-grey w-full max-w-full overflow-hidden pb-[var(--section-space)]">
   <div class="site-container text-center w-full">
     <div class="reveal">
@@ -9,33 +13,33 @@
       <address class="not-italic space-y-2 text-white/80 mb-8">
         <p>
           <a
-            href="https://www.google.com/maps/search/?api=1&query=9+Bigg+Market+202+Hivetree+Newcastle+upon+Tyne+NE1+1UN"
+            href={business.mapsUrl}
             target="_blank"
             rel="noopener noreferrer"
             class="hover:text-salon-orange transition-colors"
           >
-            9 Bigg Market, 202 Hivetree<br />
-            Newcastle upon Tyne NE1 1UN
+            {business.address.streetAddress}<br />
+            {business.address.addressLocality} {business.address.postalCode}
           </a>
         </p>
       </address>
       <div class="hero-cta-group mx-auto">
         <a
-          href="https://www.instagram.com/allankingslandhair/"
+          href={allanInstagram.url}
           target="_blank"
           rel="noopener noreferrer"
           class="hero-cta inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 text-[0.65rem] sm:text-xs font-medium tracking-[0.15em] sm:tracking-[0.2em] uppercase text-white transition-colors"
         >
-          @allankingslandhair
+          {allanInstagram.handle}
           <span aria-hidden="true">↗</span>
         </a>
         <a
-          href="https://www.instagram.com/hair_bylivgriffin/"
+          href={livInstagram.url}
           target="_blank"
           rel="noopener noreferrer"
           class="hero-cta inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 text-[0.65rem] sm:text-xs font-medium tracking-[0.15em] sm:tracking-[0.2em] uppercase text-white transition-colors"
         >
-          @hair_bylivgriffin
+          {livInstagram.handle}
           <span aria-hidden="true">↗</span>
         </a>
       </div>

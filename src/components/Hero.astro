@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import hero from "../assets/images/hero.jpg";
+import { allanInstagram } from "../data/business";
 ---
 
 <section id="home" class="relative min-h-screen w-full max-w-full md:grid md:grid-cols-2 overflow-hidden">
@@ -38,7 +39,7 @@ import hero from "../assets/images/hero.jpg";
           Explore gallery
         </a>
         <a
-          href="https://www.instagram.com/allankingslandhair/"
+          href={allanInstagram.url}
           target="_blank"
           rel="noopener noreferrer"
           class="hero-cta inline-flex items-center justify-center px-5 sm:px-6 py-3 text-[0.65rem] sm:text-xs font-medium tracking-[0.15em] sm:tracking-[0.2em] uppercase text-white transition-colors"

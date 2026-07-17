@@ -36,7 +36,7 @@ const totalLabel = String(items.length).padStart(2, "0");
     </div>
 
     <div class="relative site-bleed-right reveal overflow-x-clip">
-      <div id="gallery-track" class="flex gap-4 md:gap-5 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2">
+      <div id="gallery-track" class="flex gap-4 md:gap-5 overflow-x-auto snap-x snap-mandatory pb-2">
         {
           items.map((item) => (
             <button
@@ -66,7 +66,7 @@ const totalLabel = String(items.length).padStart(2, "0");
       <button
         id="gallery-prev"
         type="button"
-        class="w-10 h-10 flex items-center justify-center text-white/80 hover:text-salon-orange transition-colors"
+        class="w-10 h-10 flex items-center justify-center text-white/80 hover:text-salon-orange transition-colors cursor-pointer"
         aria-label="Previous gallery image"
       >
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -76,7 +76,7 @@ const totalLabel = String(items.length).padStart(2, "0");
       <button
         id="gallery-next"
         type="button"
-        class="w-10 h-10 flex items-center justify-center text-white/80 hover:text-salon-orange transition-colors"
+        class="w-10 h-10 flex items-center justify-center text-white/80 hover:text-salon-orange transition-colors cursor-pointer"
         aria-label="Next gallery image"
       >
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">

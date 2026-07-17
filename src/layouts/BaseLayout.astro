@@ -1,27 +1,97 @@
 ---
+import { getImage } from "astro:assets";
+import hero from "../assets/images/hero.jpg";
+import { business } from "../data/business";
+import { faqs } from "../data/faq";
 import "../styles/global.css";
 
 interface Props {
   title?: string;
   description?: string;
   bodyClass?: string;
+  includeSchema?: boolean;
 }
 
 const {
   title = "King's Chair — Hairdressing Salon",
-  description = "King's Chair — bespoke hairdressing at Hivetree, Newcastle upon Tyne. Cuts, colour and styling by Liv Griffin and Allan Kingsland.",
+  description = business.description,
   bodyClass = "",
+  includeSchema = false,
 } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImage = await getImage({ src: hero, width: 1200, height: 630, format: "jpg" });
+const ogImageURL = new URL(ogImage.src, Astro.site).href;
+
+const jsonLd = includeSchema
+  ? {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": ["HairSalon", "LocalBusiness"],
+          "@id": `${Astro.site}#salon`,
+          name: business.name,
+          description: business.description,
+          url: Astro.site?.href,
+          image: ogImageURL,
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: business.address.streetAddress,
+            addressLocality: business.address.addressLocality,
+            postalCode: business.address.postalCode,
+            addressCountry: business.address.addressCountry,
+          },
+          sameAs: business.stylists.map((s) => s.instagram.url),
+        },
+        {
+          "@type": "WebSite",
+          "@id": `${Astro.site}#website`,
+          name: business.name,
+          url: Astro.site?.href,
+          description: business.description,
+          publisher: { "@id": `${Astro.site}#salon` },
+        },
+        {
+          "@type": "FAQPage",
+          "@id": `${Astro.site}#faq`,
+          mainEntity: faqs.map((item) => ({
+            "@type": "Question",
+            name: item.question,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: item.answer,
+            },
+          })),
+        },
+      ],
+    }
+  : null;
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#000000" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalURL} />
     <title>{title}</title>
     <meta name="description" content={description} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={business.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImageURL} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+
+    <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
@@ -46,6 +116,11 @@ const {
       href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
+    {
+      jsonLd && (
+        <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+      )
+    }
   </head>
   <body
     class:list={[

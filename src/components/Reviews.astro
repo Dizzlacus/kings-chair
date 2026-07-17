@@ -15,7 +15,7 @@ import { reviews } from "../data/reviews";
         <button
           id="reviews-prev"
           type="button"
-          class="w-10 h-10 flex items-center justify-center text-white/80 hover:text-salon-orange transition-colors"
+          class="w-10 h-10 flex items-center justify-center text-white/80 hover:text-salon-orange transition-colors cursor-pointer"
           aria-label="Previous review"
         >
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -25,7 +25,7 @@ import { reviews } from "../data/reviews";
         <button
           id="reviews-next"
           type="button"
-          class="w-10 h-10 flex items-center justify-center text-white/80 hover:text-salon-orange transition-colors"
+          class="w-10 h-10 flex items-center justify-center text-white/80 hover:text-salon-orange transition-colors cursor-pointer"
           aria-label="Next review"
         >
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -36,7 +36,7 @@ import { reviews } from "../data/reviews";
     </div>
 
     <div class="relative site-bleed-right reveal">
-      <div id="reviews-track" class="flex gap-4 md:gap-5 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2">
+      <div id="reviews-track" class="flex gap-4 md:gap-5 overflow-x-auto snap-x snap-mandatory pb-2">
         {
           reviews.map((review) => (
             <article class="review-card shrink-0 w-[85vw] sm:w-[55vw] md:w-[42vw] lg:w-[36vw] max-w-[520px] pl-5 md:pl-6 py-2 grid grid-cols-[auto_1fr] gap-x-4 md:gap-x-5">

@@ -157,6 +157,30 @@ html {
   transition-delay: 0.3s;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-delay-1,
+  .reveal-delay-2,
+  .reveal-delay-3 {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .nav-link::after,
+  #nav-mobile-panel,
+  #icon-hamburger,
+  #icon-close,
+  .gallery-tile img,
+  .gallery-caption {
+    transition: none;
+  }
+
+  #site-header {
+    transition: none;
+  }
+}
+
 /* —— Sticky header —— */
 #site-header {
   transition: background-color 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease;
@@ -176,7 +200,7 @@ html {
   top: 0;
   height: 2px;
   width: 0%;
-  background-color: #f46910;
+  background-color: var(--color-salon-orange);
   pointer-events: none;
   z-index: 1;
 }
@@ -195,7 +219,7 @@ html {
   bottom: 0;
   width: 100%;
   height: 1px;
-  background-color: #f46910;
+  background-color: var(--color-salon-orange);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.25s ease;
@@ -214,7 +238,7 @@ html {
 }
 
 #nav-mobile-panel.is-open {
-  max-height: 280px;
+  max-height: 340px;
   opacity: 1;
 }
 
@@ -239,8 +263,8 @@ html {
 
 @media (hover: hover) and (pointer: fine) {
   .hero-cta:hover {
-    border-color: #f46910;
-    color: #f46910;
+    border-color: var(--color-salon-orange);
+    color: var(--color-salon-orange);
   }
 }
 
@@ -282,7 +306,7 @@ html {
   bottom: 0;
   padding: 0.875rem 1rem;
   background: rgba(0, 0, 0, 0.8);
-  color: #ffffff;
+  color: var(--color-salon-white);
   font-size: 0.7rem;
   font-weight: 500;
   letter-spacing: 0.15em;
@@ -300,7 +324,7 @@ html {
   right: 1rem;
   top: 0;
   height: 1px;
-  background-color: #f46910;
+  background-color: var(--color-salon-orange);
 }
 
 @media (min-width: 768px) {
@@ -365,7 +389,7 @@ html {
   text-orientation: mixed;
   transform: rotate(180deg);
   letter-spacing: 0.35em;
-  color: #ffffff;
+  color: var(--color-salon-white);
   transform-origin: center center;
 }
 
@@ -433,7 +457,7 @@ html {
   position: absolute;
   width: 28px;
   height: 28px;
-  border-color: #f46910;
+  border-color: var(--color-salon-orange);
   pointer-events: none;
   z-index: 2;
 }
@@ -469,7 +493,7 @@ html {
 /* —— Reviews pull-quote —— */
 .review-card {
   scroll-snap-align: start;
-  border-left: 2px solid #f46910;
+  border-left: 2px solid var(--color-salon-orange);
   border-top: none;
   border-right: none;
   border-bottom: none;
@@ -481,7 +505,7 @@ html {
   font-size: 3.75rem;
   font-weight: 700;
   line-height: 0.75;
-  color: rgba(244, 105, 16, 0.75);
+  color: color-mix(in srgb, var(--color-salon-orange) 75%, transparent);
   user-select: none;
 }
 
@@ -504,10 +528,85 @@ html {
 .section-rule {
   width: 4rem;
   height: 2px;
-  background-color: #f46910;
+  background-color: var(--color-salon-orange);
   margin-left: auto;
   margin-right: auto;
   margin-bottom: var(--section-space);
+}
+
+/* —— FAQ accordion —— */
+.faq-column {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (min-width: 768px) {
+  .faq-list--columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 2.5rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .faq-list--columns .faq-column + .faq-column {
+    border-top: none;
+  }
+}
+
+.faq-summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-summary::marker {
+  content: "";
+}
+
+.faq-chevron {
+  transition: transform 0.3s ease, color 0.25s ease;
+}
+
+.faq-summary:hover .faq-chevron,
+.faq-summary:focus-visible .faq-chevron {
+  color: var(--color-salon-orange);
+}
+
+.faq-item[open] > .faq-summary {
+  color: var(--color-salon-orange);
+}
+
+.faq-item[open] > .faq-summary .faq-chevron {
+  transform: rotate(180deg);
+  color: var(--color-salon-orange);
+}
+
+.faq-item {
+  interpolate-size: allow-keywords;
+}
+
+.faq-item::details-content {
+  block-size: 0;
+  overflow-y: clip;
+  opacity: 0;
+  transition:
+    block-size 0.35s ease,
+    opacity 0.28s ease,
+    content-visibility 0.35s allow-discrete;
+}
+
+.faq-item[open]::details-content {
+  block-size: auto;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-chevron {
+    transition: none;
+  }
+
+  .faq-item::details-content {
+    transition: none;
+    opacity: 1;
+  }
 }
 
 /* Legal pages: no gallery editorial rail */

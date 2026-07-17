@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import aboutTeam from "../assets/images/gallery/about-team.png";
+import { business } from "../data/business";
 ---
 
 <section id="about" class="bg-salon-grey w-full max-w-full overflow-hidden pb-[var(--section-space)]">
@@ -17,32 +18,23 @@ import aboutTeam from "../assets/images/gallery/about-team.png";
           and create a look you'll love.
         </p>
         <div class="space-y-6">
-          <div>
-            <p class="text-sm font-medium text-white mb-1">Allan Kingsland</p>
-            <p class="text-white/65 text-sm leading-relaxed mb-2">Multi-award winning Wella Color Expert.</p>
-            <a
-              href="https://www.instagram.com/allankingslandhair/"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center gap-2 text-sm text-salon-orange hover:text-white transition-colors"
-            >
-              @allankingslandhair
-              <span aria-hidden="true">↗</span>
-            </a>
-          </div>
-          <div>
-            <p class="text-sm font-medium text-white mb-1">Liv Griffin</p>
-            <p class="text-white/65 text-sm leading-relaxed mb-2">Bespoke, creative and technical expertise.</p>
-            <a
-              href="https://www.instagram.com/hair_bylivgriffin/"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center gap-2 text-sm text-salon-orange hover:text-white transition-colors"
-            >
-              @hair_bylivgriffin
-              <span aria-hidden="true">↗</span>
-            </a>
-          </div>
+          {
+            business.stylists.map((stylist) => (
+              <div>
+                <p class="text-sm font-medium text-white mb-1">{stylist.name}</p>
+                <p class="text-white/65 text-sm leading-relaxed mb-2">{stylist.bio}</p>
+                <a
+                  href={stylist.instagram.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-2 text-sm text-salon-orange hover:text-white transition-colors"
+                >
+                  {stylist.instagram.handle}
+                  <span aria-hidden="true">↗</span>
+                </a>
+              </div>
+            ))
+          }
         </div>
       </div>
       <div class="reveal reveal-delay-1 site-bleed-right">

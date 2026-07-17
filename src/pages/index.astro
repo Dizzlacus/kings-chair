@@ -6,11 +6,16 @@ import Gallery from "../components/Gallery.astro";
 import About from "../components/About.astro";
 import Reviews from "../components/Reviews.astro";
 import Contact from "../components/Contact.astro";
+import Faq from "../components/Faq.astro";
 import Footer from "../components/Footer.astro";
 import Lightbox from "../components/Lightbox.astro";
+import { business } from "../data/business";
+
+const title = "King's Chair — Hairdressing Salon";
+const description = business.description;
 ---
 
-<BaseLayout>
+<BaseLayout title={title} description={description} includeSchema>
   <Header />
   <main class="w-full max-w-full overflow-x-hidden flex flex-col">
     <Hero />
@@ -21,6 +26,8 @@ import Lightbox from "../components/Lightbox.astro";
     <Reviews />
     <div class="section-rule" aria-hidden="true"></div>
     <Contact />
+    <div class="section-rule" aria-hidden="true"></div>
+    <Faq />
     <Footer />
   </main>
   <Lightbox />
