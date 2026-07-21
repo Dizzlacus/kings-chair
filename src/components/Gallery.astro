@@ -38,7 +38,7 @@ const totalLabel = String(items.length).padStart(2, "0");
     <div class="relative site-bleed-right reveal overflow-x-clip">
       <div id="gallery-track" class="flex gap-4 md:gap-5 overflow-x-auto snap-x snap-mandatory pb-2">
         {
-          items.map((item) => (
+          items.map((item, index) => (
             <button
               type="button"
               class="gallery-tile shrink-0 w-[78vw] sm:w-[48vw] md:w-[38vw] lg:w-[32vw] max-w-[480px] overflow-hidden rounded-none aspect-[4/5] bg-salon-grey cursor-pointer text-left"
@@ -52,7 +52,9 @@ const totalLabel = String(items.length).padStart(2, "0");
                 class="w-full h-full object-cover object-top"
                 widths={[320, 480, 640]}
                 sizes="(max-width: 640px) 78vw, (max-width: 768px) 48vw, 32vw"
-                loading="lazy"
+                loading="eager"
+                decoding="async"
+                fetchpriority={index === 0 ? "high" : undefined}
               />
               <span class="gallery-caption">{item.caption}</span>
             </button>

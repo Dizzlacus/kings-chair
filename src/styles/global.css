@@ -61,6 +61,13 @@
 /* One offset for all anchors: section top sits just under the fixed header */
 html {
   scroll-padding-top: var(--header-offset);
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 /* Hero copy sits in its own half — keep the base gutter only */
